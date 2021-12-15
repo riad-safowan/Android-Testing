@@ -12,7 +12,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class ShoppingDaoTest {
@@ -34,20 +33,53 @@ class ShoppingDaoTest {
     }
 
     @After
-    @Throws(IOException::class)
     fun tearDown() {
         database.close()
     }
 
     @Test
     fun insertShoppingItem() = runBlockingTest {
-        val item = ShoppingItem(1, "mango", 5, 30.45f, "osjkafoiaf")
-        dao.insertShoppingItem(item)
+        val item1 =  ShoppingItem(1, "mango", 1, 10f, "osjkafoiaf")
+        val item2 =  ShoppingItem(1, "mango", 1, 10f, "osjkafoiaf")
+        val item3 =  ShoppingItem(1, "mango", 1, 10f, "osjkafoiaf")
+
+        dao.insertShoppingItem(item1)
+        dao.insertShoppingItem(item2)
+        dao.insertShoppingItem(item3)
 
         val allItems = dao.observeAllShoppingItems().getOrAwaitValue()
 
-        assertThat(allItems).contains(item)
+        assertThat(allItems).contains(item1)
 
+    }
+
+    @Test
+    fun deleteShoppingItem() = runBlockingTest {
+        val item1 =  ShoppingItem(1, "mango", 1, 10f, "osjkafoiaf")
+        val item2 =  ShoppingItem(1, "mango", 1, 10f, "osjkafoiaf")
+
+        dao.insertShoppingItem(item1)
+        dao.insertShoppingItem(item2)
+        dao.deleteShoppingItem(item1)
+
+        val allItems = dao.observeAllShoppingItems().getOrAwaitValue()
+
+        assertThat(allItems).doesNotContain(item1)
+    }
+
+    @Test
+    fun observePriceShoppingItem() = runBlockingTest {
+        val item1 =  ShoppingItem(1, "mango", 1, 10f, "osjkafoiaf")
+        val item2 =  ShoppingItem(2, "mango", 2, 5f, "osjkafoiaf")
+        val item3 =  ShoppingItem(3, "mango", 3, 10f, "osjkafoiaf")
+
+        dao.insertShoppingItem(item1)
+        dao.insertShoppingItem(item2)
+        dao.insertShoppingItem(item3)
+
+        val allItems = dao.observeTotalPrice().getOrAwaitValue()
+
+        assertThat(allItems).isEqualTo(50)
     }
 
 }
