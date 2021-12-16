@@ -3,7 +3,7 @@ package com.riadsafowan.androidtest.repositories
 import androidx.lifecycle.LiveData
 import com.riadsafowan.androidtest.data.local.ShoppingItem
 import com.riadsafowan.androidtest.data.remote.ImageResponse
-import com.riadsafowan.androidtest.data.remote.Resource
+import com.riadsafowan.androidtest.utils.Resource
 
 interface Repository {
     suspend fun insertShoppingItem(shoppingItem: ShoppingItem)

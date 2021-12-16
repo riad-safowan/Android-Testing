@@ -5,7 +5,7 @@ import com.riadsafowan.androidtest.data.local.ShoppingDao
 import com.riadsafowan.androidtest.data.local.ShoppingItem
 import com.riadsafowan.androidtest.data.remote.ApiClient
 import com.riadsafowan.androidtest.data.remote.ImageResponse
-import com.riadsafowan.androidtest.data.remote.Resource
+import com.riadsafowan.androidtest.utils.Resource
 import java.lang.Exception
 import javax.inject.Inject
 

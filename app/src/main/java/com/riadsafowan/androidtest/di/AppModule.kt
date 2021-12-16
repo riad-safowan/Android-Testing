@@ -2,8 +2,11 @@ package com.riadsafowan.androidtest.di
 
 import android.content.Context
 import androidx.room.Room
+import com.riadsafowan.androidtest.data.local.ShoppingDao
 import com.riadsafowan.androidtest.data.local.ShoppingItemDatabase
 import com.riadsafowan.androidtest.data.remote.ApiClient
+import com.riadsafowan.androidtest.repositories.Repository
+import com.riadsafowan.androidtest.repositories.ShoppingRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,6 +31,13 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideShoppingRepository(
+        dao: ShoppingDao,
+        apiClient: ApiClient
+    ) = ShoppingRepository(dao, apiClient) as Repository
+
+    @Singleton
+    @Provides
     fun provideApiClient(): ApiClient {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
@@ -35,4 +45,5 @@ object AppModule {
             .build()
             .create(ApiClient::class.java)
     }
+
 }

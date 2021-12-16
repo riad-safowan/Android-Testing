@@ -1,4 +1,4 @@
-package com.riadsafowan.androidtest.data.remote
+package com.riadsafowan.androidtest.utils
 
 import okhttp3.ResponseBody
 
