@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.riadsafowan.androidtest.data.local.ShoppingItem
 import com.riadsafowan.androidtest.data.remote.ImageResponse
-import com.riadsafowan.androidtest.data.remote.Resource
+import com.riadsafowan.androidtest.utils.Resource
 
 
-class ShoppingRepositoryTest : Repository {
+class FakeShoppingRepository : Repository {
     private val shoppingItems = mutableListOf<ShoppingItem>()
     private val observableShoppingItems = MutableLiveData<List<ShoppingItem>>(shoppingItems)
     private val observableTotalPrice = MutableLiveData<Float>()
@@ -41,7 +41,7 @@ class ShoppingRepositoryTest : Repository {
     }
 
     override fun observeTotalPrice(): LiveData<Float> {
-        return observeTotalPrice()
+        return observableTotalPrice
     }
 
     override suspend fun searchForImage(imageQuery: String): Resource<ImageResponse> {

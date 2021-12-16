@@ -7,6 +7,6 @@ import com.riadsafowan.androidtest.R
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)ShoppingFragment
+        setContentView(R.layout.activity_main)
     }
 }
