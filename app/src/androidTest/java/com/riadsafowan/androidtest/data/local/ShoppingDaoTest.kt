@@ -40,8 +40,8 @@ class ShoppingDaoTest {
     @Test
     fun insertShoppingItem() = runBlockingTest {
         val item1 =  ShoppingItem(1, "mango", 1, 10f, "osjkafoiaf")
-        val item2 =  ShoppingItem(1, "mango", 1, 10f, "osjkafoiaf")
-        val item3 =  ShoppingItem(1, "mango", 1, 10f, "osjkafoiaf")
+        val item2 =  ShoppingItem(2, "mango", 1, 10f, "osjkafoiaf")
+        val item3 =  ShoppingItem(3, "mango", 1, 10f, "osjkafoiaf")
 
         dao.insertShoppingItem(item1)
         dao.insertShoppingItem(item2)
@@ -49,14 +49,14 @@ class ShoppingDaoTest {
 
         val allItems = dao.observeAllShoppingItems().getOrAwaitValue()
 
-        assertThat(allItems).contains(item1)
+        assertThat(allItems).contains(item3)
 
     }
 
     @Test
     fun deleteShoppingItem() = runBlockingTest {
         val item1 =  ShoppingItem(1, "mango", 1, 10f, "osjkafoiaf")
-        val item2 =  ShoppingItem(1, "mango", 1, 10f, "osjkafoiaf")
+        val item2 =  ShoppingItem(2, "mango", 1, 10f, "osjkafoiaf")
 
         dao.insertShoppingItem(item1)
         dao.insertShoppingItem(item2)
