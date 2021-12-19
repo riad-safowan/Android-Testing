@@ -4,30 +4,40 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import com.riadsafowan.androidtest.getOrAwaitValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import javax.inject.Inject
+import javax.inject.Named
 
-@RunWith(AndroidJUnit4::class)
+@ExperimentalCoroutinesApi
+@SmallTest
+@HiltAndroidTest
 class ShoppingDaoTest {
+
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
 
     @get:Rule
     var instanceTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var database: ShoppingItemDatabase
+    @Inject
+    @Named("test_db")
+    lateinit var database: ShoppingItemDatabase
     private lateinit var dao: ShoppingDao
 
     @Before
     fun setup() {
-        database = Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),
-            ShoppingItemDatabase::class.java
-        ).allowMainThreadQueries().build()
+        hiltRule.inject()
 
         dao = database.shoppingDao()
     }
@@ -39,9 +49,9 @@ class ShoppingDaoTest {
 
     @Test
     fun insertShoppingItem() = runBlockingTest {
-        val item1 =  ShoppingItem(1, "mango", 1, 10f, "osjkafoiaf")
-        val item2 =  ShoppingItem(2, "mango", 1, 10f, "osjkafoiaf")
-        val item3 =  ShoppingItem(3, "mango", 1, 10f, "osjkafoiaf")
+        val item1 = ShoppingItem(1, "mango", 1, 10f, "osjkafoiaf")
+        val item2 = ShoppingItem(2, "mango", 1, 10f, "osjkafoiaf")
+        val item3 = ShoppingItem(3, "mango", 1, 10f, "osjkafoiaf")
 
         dao.insertShoppingItem(item1)
         dao.insertShoppingItem(item2)
@@ -55,8 +65,8 @@ class ShoppingDaoTest {
 
     @Test
     fun deleteShoppingItem() = runBlockingTest {
-        val item1 =  ShoppingItem(1, "mango", 1, 10f, "osjkafoiaf")
-        val item2 =  ShoppingItem(2, "mango", 1, 10f, "osjkafoiaf")
+        val item1 = ShoppingItem(1, "mango", 1, 10f, "osjkafoiaf")
+        val item2 = ShoppingItem(2, "mango", 1, 10f, "osjkafoiaf")
 
         dao.insertShoppingItem(item1)
         dao.insertShoppingItem(item2)
@@ -69,9 +79,9 @@ class ShoppingDaoTest {
 
     @Test
     fun observePriceShoppingItem() = runBlockingTest {
-        val item1 =  ShoppingItem(1, "mango", 1, 10f, "osjkafoiaf")
-        val item2 =  ShoppingItem(2, "mango", 2, 5f, "osjkafoiaf")
-        val item3 =  ShoppingItem(3, "mango", 3, 10f, "osjkafoiaf")
+        val item1 = ShoppingItem(1, "mango", 1, 10f, "osjkafoiaf")
+        val item2 = ShoppingItem(2, "mango", 2, 5f, "osjkafoiaf")
+        val item3 = ShoppingItem(3, "mango", 3, 10f, "osjkafoiaf")
 
         dao.insertShoppingItem(item1)
         dao.insertShoppingItem(item2)
