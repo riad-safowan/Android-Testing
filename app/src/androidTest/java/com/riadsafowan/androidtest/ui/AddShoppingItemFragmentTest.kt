@@ -1,13 +1,9 @@
 package com.riadsafowan.androidtest.ui
 
-import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.Espresso.pressBack
 import androidx.test.filters.MediumTest
-import com.riadsafowan.androidtest.R
 import com.riadsafowan.androidtest.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -15,13 +11,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 
-@HiltAndroidTest
 @MediumTest
+@HiltAndroidTest
 @ExperimentalCoroutinesApi
-class ShoppingFragmentTest {
-
+class AddShoppingItemFragmentTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
@@ -31,22 +27,19 @@ class ShoppingFragmentTest {
     }
 
     @Test
-    fun clickAddShoppingItemButton_navigateToAddShoppingItemFragment() {
-
+    fun pressBackButton_popBackStack() {
         val navController = mock(NavController::class.java)
-//        `when`(navController.popBackStack()).thenReturn()
-
-        launchFragmentInHiltContainer<ShoppingFragment> {
+        launchFragmentInHiltContainer<AddShoppingItemFragment> {
             this.viewLifecycleOwnerLiveData.observeForever {
-                if(it != null){
+                if (it != null) {
                     Navigation.setViewNavController(requireView(), navController)
                 }
             }
         }
 
-        onView(withId(R.id.fabAddShoppingItem)).perform(click())
+        pressBack()
+        verify(navController).popBackStack()
 
-        verify(navController).navigate(ShoppingFragmentDirections.actionShoppingFragmentToAddShoppingItemFragment())
     }
 
 }
