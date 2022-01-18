@@ -2,6 +2,9 @@ package com.riadsafowan.androidtest.di
 
 import android.content.Context
 import androidx.room.Room
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.riadsafowan.androidtest.R
 import com.riadsafowan.androidtest.data.local.ShoppingDao
 import com.riadsafowan.androidtest.data.local.ShoppingItemDatabase
 import com.riadsafowan.androidtest.data.remote.ApiClient
@@ -19,6 +22,16 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+
+    @Singleton
+    @Provides
+    fun provideGlideInstance(@ApplicationContext context: Context) =
+        Glide.with(context).setDefaultRequestOptions(
+            RequestOptions()
+                .placeholder(R.drawable.ic_image)
+                .error(R.drawable.ic_image)
+        )
 
     @Singleton
     @Provides

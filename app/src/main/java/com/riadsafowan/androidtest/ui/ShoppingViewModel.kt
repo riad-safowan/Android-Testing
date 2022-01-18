@@ -15,7 +15,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ShoppingViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
+class ShoppingViewModel @Inject constructor(
+    private val repository: Repository
+) : ViewModel() {
 
 
     val shoppingItems = repository.observeAllShoppingItems()
@@ -81,7 +83,7 @@ class ShoppingViewModel @Inject constructor(private val repository: Repository) 
         }
 
         val priceF = price.toFloat()
-        if (priceF < 0 || priceF > 999999999){
+        if (priceF < 0 || priceF > 999999999) {
             _insertShoppingItemStatus.postValue(
                 Event(
                     Resource.error(
